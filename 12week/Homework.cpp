@@ -20,7 +20,7 @@ int main(int argc, char** argv){
 	int frame_width = cap.get(CAP_PROP_FRAME_WIDTH);
 	int frame_height = cap.get(CAP_PROP_FRAME_HEIGHT);
 
-	VideoWriter video("sobel_res.avi", VideoWriter::fourcc('M','J','P','G'),10,Size(frame_width,frame_height));
+	VideoWriter video("sobel_res.avi", VideoWriter::fourcc('M','J','P','G'),10,Size(frame_width,frame_height), False);
 	printf("open Camera\n");
 
 	Mat img, gray, sobelX, sobelY, sobel;
@@ -29,10 +29,10 @@ int main(int argc, char** argv){
 	int max;
 
 	if(argc>1)	max = int(argv[1]);
-	else	max = 50;
+	else	max = 100;
 
 	while(cnt <= max){
-		cap.read(img);
+		cap >> img;
 		if(img.empty()) break;
 		cvtColor(img, gray, COLOR_BGR2GRAY);
 		Sobel(gray, sobelX, CV_8U, 1, 0);
