@@ -20,7 +20,7 @@ int main(int argc, char** argv){
 	int frame_width = cap.get(CAP_PROP_FRAME_WIDTH);
 	int frame_height = cap.get(CAP_PROP_FRAME_HEIGHT);
 
-	VideoWriter video("sobel.avi", VideoWriter::fourcc('M','J','P','G'),10,Size(frame_width,frame_height));
+	VideoWriter video("sobel_res.avi", VideoWriter::fourcc('M','J','P','G'),10,Size(frame_width,frame_height));
 	printf("open Camera\n");
 
 	Mat img, gray, sobelX, sobelY, sobel;
