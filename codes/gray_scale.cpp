@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 	cvtColor(img, gray, COLOR_BGR2GRAY);
 	imwrite("gray_lenna.bmp", gray);
 
-	imshow("gray_lenna", gray);
-	if(waitKey(30)>=0) return -1;
-
+	//imshow("gray_lenna", gray);
+	//if(waitKey(30)>=0) return -1;
+	return 0;
 }
