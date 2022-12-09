@@ -7,11 +7,13 @@ import time
 from threading import Thread
 import importlib.util
 import copy
+import sys
 
+sys.path.append("/home/pi/.local/lib/python3.9/site-packages/tflite_runtime/__init__.py")
 
 class VideoStream:
 	def __init__(self, resolution=(640, 480), framerate=60):
-		self.stream = cv2.VideoCapture.open(-1)
+		self.stream = cv2.VideoCapture.open(0)
 		ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
 		ret = self.stream.set(3, resolution[0])
 		ret = self.stream.set(4, resolution[1])
