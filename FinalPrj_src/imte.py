@@ -6,7 +6,6 @@ import sys
 import time
 from threading import Thread
 import importlib.util
-import copy
 import sys
 
 
@@ -22,9 +21,10 @@ imW, imH = int(resW), int(resH)
 use_TPU = 'store_true'
 
 
-pkg = imporlib.util.find_spec('tflite_runtime')
+pkg = importlib.util.find_spec('tflite_runtime')
 
 if pkg:
-	print("success")
+	from tflite_runtime.interpreter import Interpreter
 else:
 	print("failed")
+	sys.exit()
