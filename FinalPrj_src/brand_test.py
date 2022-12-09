@@ -11,38 +11,8 @@ import sys
 
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/tflite_runtime/__init__.py")
 
-class VideoStream:
-	def __init__(self, resolution=(640, 480), framerate=60):
-		self.stream = cv2.VideoCapture(0)
-		ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
-		ret = self.stream.set(3, resolution[0])
-		ret = self.stream.set(4, resolution[1])
-		(self.grabbed, self.frame) = self.stream.read()
-		self.stopped = False
-
-	def start(self):
-		Thread(target=self.update, args=()).start()
-		return self
-
-	def update(self):
-		while True:
-			if self.stopped:
-				self.stream.release()
-				return
-
-			(self.grabbed, self.frame) = self.stream.read()
-
-	def read(self):
-		return self.frame
-
-	def stop(self):
-		self.stopped = True
-
-fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-outVideo = cv2.VideoWriter("outVideo.avi",fourcc,10,(640,480));
-
 parser = argparse.ArgumentParser()
-parser.add_argument('--modeldir', default = '/home/pi/Final/')
+parser.add_argument('--modeldir', default = '/home/pi/Final/codes/')
 parser.add_argument('--graph', default = 'detect.tflite')
 parser.add_argument('--labels', default = 'labelmap.txt')
 parser.add_argument('--threshold', default = 0.5)
@@ -58,6 +28,7 @@ min_conf_threshold = float(args.threshold)
 resW, resH = args.resolution.split('x')
 imW, imH = int(resW), int(resH)
 use_TPU = args.edgetpu
+
 
 pkg = importlib.util.find_spec('tflite_runtime')
 
@@ -91,6 +62,7 @@ else:
 	interpreter = Interpreter(model_path = PATH_TO_CKPT)
 interpreter.allocate_tensors()
 
+
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 height = input_details[0]['shape'][1]
@@ -111,9 +83,15 @@ else:
 frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
-videostream = VideoStream(resolution=(imW,imH), framerate = 60).start()
+
+cap = cv2.VideoCapture(cv2.CAP_V4L2+0)
+cap.set(3, 640)
+cap.set(4, 480)
+
 time.sleep(1)
-cnt = 0;
+
+fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+outVideo = cv2.VideoWriter("outVideo.avi",fourcc,10,(640,480));
 
 while True:
 	t1 = cv2.getTickCount()
@@ -177,6 +155,3 @@ while True:
 
 	if cv2.waitKey(1) == ord('q'):
 		break
-
-cv2.destroyAllWindows()
-videostream.stop()
