@@ -11,8 +11,7 @@ import copy
 
 class VideoStream:
 	def __init__(self, resolution=(640, 480), framerate=60):
-		self.stream = cv2.VideoCapture(0)
-		#stream.open("/dev/video0", CAP_V4L2)
+		self.stream = cv2.VideoCapture.open("/dev/video0", CAP_V4L2)
 		ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
 		ret = self.stream.set(3, resolution[0])
 		ret = self.stream.set(4, resolution[1])
@@ -38,7 +37,7 @@ class VideoStream:
 		self.stopped = True
 
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-outVideo = cv2.VideoWriter("outVideo.avi",fourcc,10,Size(640,480));
+outVideo = cv2.VideoWriter("outVideo.avi",fourcc,10,(640,480));
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--modeldir', default = '/home/pi/Final/')
@@ -165,9 +164,9 @@ while True:
 	cv2.putText(boxing_img,'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
 	cv2.putText(blurred_img,'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
 
-	cv2.imshow('label img', boxing_img)
-	cv2.imshow('blurred img', blurred_img)
-	cv2.imshow('mask', mask)
+	#cv2.imshow('label img', boxing_img)
+	#cv2.imshow('blurred img', blurred_img)
+	#cv2.imshow('mask', mask)
 	t2 = cv2.getTickCount()
 	time1 = (t2-t1)/freq
 	frame_rate_calc = 1/time1
