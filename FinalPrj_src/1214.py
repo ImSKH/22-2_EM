@@ -71,14 +71,14 @@ outVideo2 = cv2.VideoWriter("outVideo_blurred.avi",fourcc,10,(640,480))
 
 while True:
     t1 = cv2.getTickCount()
-    frame1 = cap.read()
+    (grabbed, frame1) = cap.read()
 
     frame = frame1.copy()
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame_resized = cv2.resize(frame_rgb, (width, height))
     input_data = np.expand_dims(frame_resized, axis=0)
 
-    mask = np.zeros((480,640), dtype = np.unit8)
+    mask = np.zeros((480,640), dtype = np.uint8)
 
     boxing_img = frame1.copy()
     blurred_img = frame1.copy()
@@ -127,3 +127,5 @@ while True:
 
         if cv2.waitKey(1) == ord('q'):
             break
+cap.release()
+cv2.destroyAllWindows()
