@@ -81,6 +81,7 @@ while(cap.isOpened()):
 	boxes = itp.get_tensor(oude[boxes_idx]['index'])[0]
 	classes = itp.get_tensor(oude[classes_idx]['index'])[0]
 	scores = itp.get_tensor(oude[scores_idx]['index'])[0]
+	out.write(frame)
 """
 	for i in range(len(scores)):
 		if((scores[i]>min_conf_threshold) and (scores[i]<=1.0)):
@@ -98,4 +99,3 @@ while(cap.isOpened()):
 			cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED)
 			cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 """
-	out.write(frame)
