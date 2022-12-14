@@ -69,7 +69,7 @@ while(cap.isOpened()):
 		sys.exit()
 
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-	frame_resized = cv2.resize(frame_rgb. (w,h))
+	frame_resized = cv2.resize(frame_rgb, (w,h))
 	input_data = np.expand_dims(frame_resized, axis=0)
 
 	if fl_mo:
