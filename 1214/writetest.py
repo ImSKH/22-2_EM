@@ -13,9 +13,10 @@ delay = round(1000/fps)
 
 while True:
 	ret, frame = cap.read()
-
+	tmp = 0
 	out.write(frame)
-
+	for i in range(100):
+		tmp = tmp + 1
 	if cv2.waitKey(delay) == 27:
 		break
 

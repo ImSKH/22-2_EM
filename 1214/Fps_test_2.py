@@ -21,7 +21,7 @@ fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 out = cv2.VideoWriter(filename+'.avi',fourcc,fps,(640,480))
 out2 = cv2.VideoWriter(filename+'2.avi',fourcc,fps,(640,480))
 ##tensorflow
-MODEL_NAME = os.getcwd()
+MODEL_NAME = os.getcwd() + '/model/'
 GRAPH_NAME = 'detect.tflite'
 LABELMAP_NAME = 'labelmap.txt'
 min_conf_threshold = 0.5
