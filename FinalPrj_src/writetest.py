@@ -1,7 +1,7 @@
 import cv2
 import sys
 
-cap = VideoCapture(cv2.CAP_V4L2+0)
+cap = cv2.VideoCapture(cv2.CAP_V4L2+0)
 cap.set(3, 640)
 cap.set(4, 480)
 fps = cap.get(cv2.CAP_PROP_FPS)
