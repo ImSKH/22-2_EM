@@ -81,41 +81,33 @@ while True:
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame_resized = cv2.resize(frame_rgb, (width, height))
 	input_data = np.expand_dims(frame_resized, axis=0)
-
-    boxing_img = frame1.copy()
-    if floating_model:
-        input_data = (np.float32(input_data)-input_mean)/input_std
-
-    interpreter.set_tensor(input_details[0]['index'], input_data)
-    interpreter.invoke()
-
-    boxes = interpreter.get_tensor(output_details[boxes_idx]['index'])[0]
-    classes = interpreter.get_tensor(output_details[classes_idx]['index'])[0]
-    scores = interpreter.get_tensor(output_details[scores_idx]['index'])[0]
-
-    for i in range(len(scores)):
-        if((scores[i]>min_conf_threshold) and (scores[i]<=1.0)):
-            ymin = int(max(1, (boxes[i][0]*imH)))
-            xmin = int(max(1, (boxes[i][1]*imW)))
-            ymax = int(min(imH, (boxes[i][2]*imH)+5))
-            xmax = int(min(imW, (boxes[i][3]*imW)+5))
-
-            cv2.rectangle(boxing_img, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
-
-            object_name = labels[int(classes[i])]
-            label = '%s: %d%%' % (object_name, int(scores[i]*100))
-            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
-            label_ymin = max(ymin, labelSize[1]+10)
-            cv2.rectangle(boxing_img, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
-            cv2.putText(boxing_img, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
+	boxing_img = frame1.copy()
+	if floating_model:
+		input_data = (np.float32(input_data)-input_mean)/input_std
+	interpreter.set_tensor(input_details[0]['index'], input_data)
+	interpreter.invoke()
+	boxes = interpreter.get_tensor(output_details[boxes_idx]['index'])[0]
+	classes = interpreter.get_tensor(output_details[classes_idx]['index'])[0]
+	scores = interpreter.get_tensor(output_details[scores_idx]['index'])[0]
+	for i in range(len(scores)):
+		if((scores[i]>min_conf_threshold) and (scores[i]<=1.0)):
+			ymin = int(max(1, (boxes[i][0]*imH)))
+			xmin = int(max(1, (boxes[i][1]*imW)))
+			ymax = int(min(imH, (boxes[i][2]*imH)+5))
+			xmax = int(min(imW, (boxes[i][3]*imW)+5))
+			cv2.rectangle(boxing_img, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
+			object_name = labels[int(classes[i])]
+			label = '%s: %d%%' % (object_name, int(scores[i]*100))
+			labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
+			label_ymin = max(ymin, labelSize[1]+10)
+			cv2.rectangle(boxing_img, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
+			cv2.putText(boxing_img, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
             
     cv2.putText(boxing_img, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
     t2 = cv2.getTickCount()
     time1 = (t2-t1)/freq
     frame_rate_calc = 1/time1
-
-	out.write(boxing_img)
-
+    out.write(boxing_img)
 
 cap.release()
 out.release()
