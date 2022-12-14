@@ -62,7 +62,7 @@ freq = cv2.getTickFrequency()
 cap = cv2.VideoCapture(cv2.CAP_V4L2+0)
 cap.set(3, 640)
 cap.set(4, 480)
-cap.get(cv2.CAP_PROP_FPS)
+fps = cap.get(cv2.CAP_PROP_FPS)
 
 time.sleep(1)
 
@@ -76,7 +76,7 @@ while True:
 
     frame = frame1.copy()
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame_resized = cv2.resize(frame_rgb, (width, height))
+    frame_resizeqd = cv2.resize(frame_rgb, (width, height))
     input_data = np.expand_dims(frame_resized, axis=0)
 
     mask = np.zeros((480,640), dtype = np.uint8)
