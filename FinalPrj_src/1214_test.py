@@ -131,15 +131,15 @@ while True:
             cv2.rectangle(boxing_img, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
             cv2.putText(boxing_img, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
             
-        cv2.putText(boxing_img, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
-        t2 = cv2.getTickCount()
-        time1 = (t2-t1)/freq
-        frame_rate_calc = 1/time1
+    cv2.putText(boxing_img, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
+    t2 = cv2.getTickCount()
+    time1 = (t2-t1)/freq
+    frame_rate_calc = 1/time1
 
-        outVideo.write(boxing_img)
+    outVideo.write(boxing_img)
 
-        a = input()
+    a = input()
         
-        if a == "q":
-            videostream.stop()
-            sys.exit()
+    if a == "q":
+        videostream.stop()
+        sys.exit()
