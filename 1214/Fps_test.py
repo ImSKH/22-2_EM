@@ -114,5 +114,5 @@ while True:
 
     out.write(boxing_img)
 
-    if cv2.waitKey(delay) == 27:
+    if cv2.waitKey(1) == 27:
         break
