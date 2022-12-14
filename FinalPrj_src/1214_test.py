@@ -16,6 +16,7 @@ class VideoStream:
         ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
         ret = self.stream.set(3, resolution[0])
         ret = self.stream.set(4, resolution[1])
+        fps = self.stream.get(cv2.CAP_PROP_FPS)
         (self.grabbed, self.frame) = self.stream.read()
         self.stopped = False
 
@@ -35,7 +36,7 @@ class VideoStream:
         return self.frame
 
     def fps(self):
-        return self.get(cv2.CAP_PROP_FPS)
+        return self.fps
 
     def stop(self):
         self.stopped = True
