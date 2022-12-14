@@ -9,7 +9,7 @@ import importlib.util
 
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 
-MODEL_NAME = '/home/pi/Final/codes/'
+MODEL_NAME = '/home/pi/Final/22-2_EM/codes/'
 GRAPH_NAME = 'detect.tflite'
 LABELMAP_NAME = 'labelmap.txt'
 min_conf_threshold = 0.5
@@ -62,12 +62,13 @@ freq = cv2.getTickFrequency()
 cap = cv2.VideoCapture(cv2.CAP_V4L2+0)
 cap.set(3, 640)
 cap.set(4, 480)
+cap.get(cv2.CAP_PROP_FPS)
 
 time.sleep(1)
 
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-outVideo = cv2.VideoWriter("outVideo_boxed.avi",fourcc,10,(640,480))
-outVideo2 = cv2.VideoWriter("outVideo_blurred.avi",fourcc,10,(640,480))
+outVideo = cv2.VideoWriter("outVideo_boxed.avi",fourcc,fps,(640,480))
+outVideo2 = cv2.VideoWriter("outVideo_blurred.avi",fourcc,fps,(640,480))
 
 while True:
     t1 = cv2.getTickCount()
