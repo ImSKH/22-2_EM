@@ -14,7 +14,7 @@ cap.set(3, 640)
 cap.set(4, 480)
 fps = cap.get(cv2.CAP_PROP_FPS)
 
-filename = __filename__
+filename = os.__file__
 
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 out = cv2.VideoWriter(filename+'.avi',fourcc,fps,(640,480))
