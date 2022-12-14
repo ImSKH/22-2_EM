@@ -13,7 +13,6 @@ while True:
 	outVideo.write(frame)
 
 	a = input()
-
 	if a == "q":
 		cap.release()
 		sys.exit()
