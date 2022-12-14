@@ -53,7 +53,7 @@ if('StatefulPartitionedCall' in outname):
 else:
     boxes_idx, classes_idx, scores_idx = 0,1,2
 
-video = cv2.VideoCapture(cv2.CAP_V4L2+0)
+cap = cv2.VideoCapture(cv2.CAP_V4L2+0)
 cap.set(3, resW)
 cap.set(4, resH)
 fps = cap.get(cv2.CAP_PROP_FPS)
