@@ -34,6 +34,9 @@ class VideoStream:
     def read(self):
         return self.frame
 
+    def fps(self):
+        return self.get(cv2.CAP_PROP_FPS)
+
     def stop(self):
         self.stopped = True
 
@@ -91,8 +94,12 @@ freq = cv2.getTickFrequency()
 videostream = VideoStream(resolution=(imW, imH), framerate = 60).start()
 time.sleep(1)
 
-fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-outVideo = cv2.VideoWriter("outVideo_test.avi",fourcc,10,(640,480))
+fps = videostream.fps()
+
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+outVideo = cv2.VideoWriter("outVideo_test.avi",fourcc,fps,(640,480))
+
+delay = round(1000/fps)
 
 while True:
     t1 = cv2.getTickCount()
@@ -138,8 +145,8 @@ while True:
 
     outVideo.write(boxing_img)
 
-    a = input()
-        
-    if a == "q":
-        videostream.stop()
-        sys.exit()
+    if cv2.waitKey(delay) == 27:
+        break
+
+videostream.stop()
+videostream.release()
