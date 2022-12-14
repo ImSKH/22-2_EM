@@ -74,8 +74,8 @@ freq = cv2.getTickFrequency()
 
 while True:
 	t1 = cv2.getTickCount()
-	ret, frame = cap.read()
-	out2.write(frame)
+	ret, frame1 = cap.read()
+	out2.write(frame1)
 
 	frame = frame1.copy()
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
