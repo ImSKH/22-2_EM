@@ -9,6 +9,35 @@ import importlib.util
 
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 
+
+class VideoStream:
+    def __init__(self, resolution=(640, 480), framerate=60):
+        self.stream = cv2.VideoCapture(cv2.CAP_V4L2+0)
+        ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+        ret = self.stream.set(3, resolution[0])
+        ret = self.stream.set(4, resolution[1])
+        (self.grabbed, self.frame) = self.stream.read()
+        self.stopped = False
+
+    def start(self):
+        Thread(target=self.update, args=()).start()
+        return self
+
+    def update(self):
+        while True:
+            if self.stopped:
+                self.stream.release()
+                return
+
+            (self.grabbed, self.frame) = self.stream.read()
+
+    def read(self):
+        return self.frame
+
+    def stop(self):
+        self.stopped = True
+
+
 MODEL_NAME = '/home/pi/Final/codes/'
 GRAPH_NAME = 'detect.tflite'
 LABELMAP_NAME = 'labelmap.txt'
@@ -59,29 +88,22 @@ else:
 frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
-cap = cv2.VideoCapture(cv2.CAP_V4L2+0)
-cap.set(3, 640)
-cap.set(4, 480)
-
+videostream = VideoStream(resolution=(imW, imH), framerate = 60).start()
 time.sleep(1)
 
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 outVideo = cv2.VideoWriter("outVideo_test.avi",fourcc,10,(640,480))
-#outVideo2 = cv2.VideoWriter("outVideo_blurred.avi",fourcc,10,(640,480))
 
 while True:
     t1 = cv2.getTickCount()
-    (grabbed, frame1) = cap.read()
+    frame1 = videostream.read()
 
     frame = frame1.copy()
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame_resized = cv2.resize(frame_rgb, (width, height))
     input_data = np.expand_dims(frame_resized, axis=0)
 
-    #mask = np.zeros((480,640), dtype = np.uint8)
-
     boxing_img = frame1.copy()
-    #blurred_img = frame1.copy()
 
     if floating_model:
         input_data = (np.float32(input_data)-input_mean)/input_std
@@ -100,12 +122,6 @@ while True:
             ymax = int(min(imH, (boxes[i][2]*imH)+5))
             xmax = int(min(imW, (boxes[i][3]*imW)+5))
 
-            #for y in range(ymin,ymax):
-                #for x in range(xmin,xmax):
-                    #frame[y,x] = [255,255,255]
-                    #mask[y,x] = 255
-            #blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
-
             cv2.rectangle(boxing_img, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 
             object_name = labels[int(classes[i])]
@@ -116,16 +132,14 @@ while True:
             cv2.putText(boxing_img, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
             
         cv2.putText(boxing_img, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
-        #cv2.putText(blurred_img, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
-
         t2 = cv2.getTickCount()
         time1 = (t2-t1)/freq
         frame_rate_calc = 1/time1
 
         outVideo.write(boxing_img)
-        #outVideo2.write(blurred_img)
 
-        if cv2.waitKey(1) == ord('q'):
-            break
-cap.release()
-#cv2.destroyAllWindows()
+        a = input()
+        
+        if a == "q":
+            videostream.stop()
+            sys.exit()
