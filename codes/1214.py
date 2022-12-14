@@ -76,7 +76,7 @@ while True:
 
     frame = frame1.copy()
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame_resizeqd = cv2.resize(frame_rgb, (width, height))
+    frame_resized = cv2.resize(frame_rgb, (width, height))
     input_data = np.expand_dims(frame_resized, axis=0)
 
     mask = np.zeros((480,640), dtype = np.uint8)
