@@ -42,7 +42,7 @@ class VideoStream:
         self.stopped = True
 
 
-MODEL_NAME = '/home/pi/Final/22-2_EM/1214/'
+MODEL_NAME = os.getcwd()
 GRAPH_NAME = 'detect.tflite'
 LABELMAP_NAME = 'labelmap.txt'
 min_conf_threshold = 0.5
