@@ -73,7 +73,7 @@ while(cap.isOpened()):
 	input_data = np.expand_dims(frame_resized, axis=0)
 
 	if fl_mo:
-		input_data = (n.float32(input_data)-input_mean)/input_std
+		input_data = (np.float32(input_data)-input_mean)/input_std
 
 	itp.set_tensor(inde[0]['index'],input_data)
 	itp.invoke()
