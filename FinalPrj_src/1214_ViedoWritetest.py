@@ -12,7 +12,7 @@ while True:
 	(grabbed, frame) = cap.read()
 	outVideo.write(frame)
 
-	a = input():
+	a = input()
 
 	if a == "q":
 		cap.release()
