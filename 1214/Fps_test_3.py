@@ -86,8 +86,8 @@ while(cap.isOpened()):
 		if((scores[i]>min_conf_threshold) and (scores[i]<=1.0)):
 			ymin = int(max(1,(boxes[i][0] * resH)))
 			xmin = int(max(1,(boxes[i][1] * resW)))
-			ymax = int(min(imH,(boxes[i][2] * resH)))
-			xmax = int(min(imW,(boxes[i][3] * resW)))
+			ymax = int(min(resH,(boxes[i][2] * resH)))
+			xmax = int(min(resW,(boxes[i][3] * resW)))
 
 			cv2.rectangle(frame, (xmin, ymin), (xmax,ymax), (10,255,0), 4)
 
