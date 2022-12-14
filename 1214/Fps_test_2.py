@@ -76,11 +76,11 @@ while True:
 	t1 = cv2.getTickCount()
 	ret, frame = cap.read()
 	out2.write(frame)
-	
+
 	frame = frame1.copy()
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame_resized = cv2.resize(frame_rgb, (width, height))
-    input_data = np.expand_dims(frame_resized, axis=0)
+	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+	frame_resized = cv2.resize(frame_rgb, (width, height))
+	input_data = np.expand_dims(frame_resized, axis=0)
 
     boxing_img = frame1.copy()
     if floating_model:
