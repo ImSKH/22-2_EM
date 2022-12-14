@@ -66,7 +66,7 @@ fps = cap.get(cv2.CAP_PROP_FPS)
 
 time.sleep(1)
 
-fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 outVideo = cv2.VideoWriter("outVideo_boxed.avi",fourcc,fps,(640,480))
 outVideo2 = cv2.VideoWriter("outVideo_blurred.avi",fourcc,fps,(640,480))
 
