@@ -130,7 +130,7 @@ try:
 		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result2/blurr_%03d.bmp"%cnt, frame)
 
 		out.write(frame)
-		out.write(blurred_img)
+		out2.write(blurred_img)
 
 
 except KeyboardInterrupt:
