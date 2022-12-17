@@ -63,7 +63,7 @@ out2 = cv2.VideoWriter(__file__+'.avi',fourcc,fps,(resW,resH))
 frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
-mask = np.zeros((480,640), dtype=np.uint8)
+
 
 cnt = 0
 try:
@@ -76,7 +76,8 @@ try:
 		frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		frame_resized = cv2.resize(frame_rgb, (width, height))
 		input_data = np.expand_dims(frame_resized, axis = 0)
-
+		
+		mask = np.zeros((480,640), dtype=np.uint8)
 		blurred_img = frame1.copy()
 
 		beforeT = time.time()
@@ -101,7 +102,7 @@ try:
 
 				for y in range(ymin,ymax):
 					for x in range(xmin,xmax):
-						frame[y,x] = [255,255,255]
+						#frame[y,x] = [255,255,255]
 						mask[y,x] = 255
 				blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
 
