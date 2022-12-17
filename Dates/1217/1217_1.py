@@ -58,6 +58,9 @@ fps = video.get(cv2.CAP_PROP_FPS)
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 out = cv2.VideoWriter(__file__+'.avi',fourcc,fps,(resW,resH))
 
+frame_rate_calc = 1
+freq = cv2.getTickFrequency()
+
 cnt = 0
 try:
 	while True:
