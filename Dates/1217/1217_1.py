@@ -6,6 +6,8 @@ import sys
 import time
 from threading import Thread
 import importlib.util
+import time
+
 
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 
@@ -71,9 +73,12 @@ try:
 		frame = frame1.copy()
 		frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		frame_resized = cv2.resize(frame_rgb, (width, height))
-
 		input_data = np.expand_dims(frame_resized, axis = 0)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%s.bmp"%cnt, frame)
+
+		beforeT = time.localtime(time.time())
+		cv2.putText(frame, 'BF: %c' % beforeT,(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%00s.bmp"%cnt, frame)
+		
 		if floating_model:
 			input_data = (np.float32(input_data)-input_mean)/input_std
 
@@ -105,10 +110,15 @@ try:
 		t2 = cv2.getTickCount()
 		time1 = (t2-t1)/freq
 		frame_rate_calc = 1/time1
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%s.bmp"%cnt, frame)
+
+		afterT = time.localtime(time.time())
+		cv2.putText(frame, 'AF: %c' % afterT,(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+		
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%00s.bmp"%cnt, frame)
 		out.write(frame)
 
 except KeyboardInterrupt:
+	print("Quit Program")
 	video.release()
 	out.release()
 
