@@ -83,10 +83,10 @@ try:
 
 		for i in range(len(scores)):
 			if((scores[i]>min_conf_threshold) and (scores[i]<=1.0)):
-				ymin = int(max(1, (boxes[i][0]*imH)))
-				xmin = int(max(1, (boxes[i][1]*imW)))
-				ymax = int(min(imH, (boxes[i][2]*imH)+5))
-				xmax = int(min(imW, (boxes[i][3]*imW)+5))
+				ymin = int(max(1, (boxes[i][0]*resH)))
+				xmin = int(max(1, (boxes[i][1]*resW)))
+				ymax = int(min(imH, (boxes[i][2]*resH)+5))
+				xmax = int(min(imW, (boxes[i][3]*resW)+5))
 				cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 
 				object_name = labels[int(classes[i])]
