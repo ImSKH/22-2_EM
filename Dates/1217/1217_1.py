@@ -77,10 +77,10 @@ try:
 
 		beforeT = time.time()
 		cv2.putText(frame, f"{beforeT : .5f} sec",(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result/before_%00d.bmp' % cnt):
-			print("before_%00d.bmp is exists" % cnt)
-			os.remove('/result/before_%00d.bmp' % cnt)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%00d.bmp"%cnt, frame)
+		while os.path.exists('/result/before_%02d.bmp' % cnt):
+			print("before_%02d.bmp is exists" % cnt)
+			os.remove('/result/before_%02d.bmp' % cnt)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%02d.bmp"%cnt, frame)
 		
 		if floating_model:
 			input_data = (np.float32(input_data)-input_mean)/input_std
@@ -115,11 +115,11 @@ try:
 		frame_rate_calc = 1/time1
 
 		afterT = time.time()
-		cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result/after_%00d.bmp' % cnt):
-			print("after_%00d.bmp is exists" % cnt)
-			os.remove('/result/after_%00d.bmp' % cnt)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%00d.bmp"%cnt, frame)
+		cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+		while os.path.exists('/result/after_%02d.bmp' % cnt):
+			print("after_%02d.bmp is exists" % cnt)
+			os.remove('/result/after_%02d.bmp' % cnt)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%02d.bmp"%cnt, frame)
 		out.write(frame)
 
 except KeyboardInterrupt:
