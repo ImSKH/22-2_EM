@@ -100,10 +100,10 @@ try:
 				xmax = int(min(resW, (boxes[i][3]*resW)+5))
 
 				for y in range(ymin,ymax):
-                	for x in range(xmin,xmax):
-                    	frame[y,x] = [255,255,255]
-                   		mask[y,x] = 255
-            	blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
+					for x in range(xmin,xmax):
+						frame[y,x] = [255,255,255]
+						mask[y,x] = 255
+				blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
 
 				cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 
