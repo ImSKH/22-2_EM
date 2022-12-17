@@ -6,7 +6,7 @@ import sys
 import time
 from threading import Thread
 import importlib.util
-import time
+import datetime
 
 
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
@@ -76,7 +76,7 @@ try:
 		input_data = np.expand_dims(frame_resized, axis = 0)
 
 		beforeT = time.localtime(time.time())
-		cv2.putText(frame, 'BF: %c' % beforeT,(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+		cv2.putText(frame, 'BF: %s.%s' % beforeT.second % beforeT.microsecond,(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
 		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%00s.bmp"%cnt, frame)
 		
 		if floating_model:
@@ -112,7 +112,7 @@ try:
 		frame_rate_calc = 1/time1
 
 		afterT = time.localtime(time.time())
-		cv2.putText(frame, 'AF: %c' % afterT,(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+		cv2.putText(frame, 'AF: %s.%s' % afterT.second % afterT.microsecond,(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
 		
 		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%00s.bmp"%cnt, frame)
 		out.write(frame)
