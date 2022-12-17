@@ -10,7 +10,7 @@ import importlib.util
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 
 
-MODEL_NAME = os.getcwd() + '/../model/'
+MODEL_NAME = '../model/'
 GRAPH_NAME = 'detect.tflite'
 LABELMAP_NAME = 'labelmap.txt'
 min_conf_threshold = float(0.5)
