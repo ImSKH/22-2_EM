@@ -75,7 +75,7 @@ try:
 		frame_resized = cv2.resize(frame_rgb, (width, height))
 		input_data = np.expand_dims(frame_resized, axis = 0)
 
-		beforeT = time.localtime(time.time())
+		beforeT = datetime.datetime.now()
 		cv2.putText(frame, 'BF: %s.%s' % beforeT.second % beforeT.microsecond,(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
 		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%00s.bmp"%cnt, frame)
 		
@@ -111,7 +111,7 @@ try:
 		time1 = (t2-t1)/freq
 		frame_rate_calc = 1/time1
 
-		afterT = time.localtime(time.time())
+		afterT = datetime.datetime.now()
 		cv2.putText(frame, 'AF: %s.%s' % afterT.second % afterT.microsecond,(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
 		
 		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%00s.bmp"%cnt, frame)
