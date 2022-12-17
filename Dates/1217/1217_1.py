@@ -76,11 +76,12 @@ try:
 		input_data = np.expand_dims(frame_resized, axis = 0)
 
 		beforeT = time.time()
-		cv2.putText(frame, f"{beforeT : .5f} sec",(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result/before_%02d.bmp' % cnt):
-			print("before_%02d.bmp is exists" % cnt)
-			os.remove('/result/before_%02d.bmp' % cnt)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%02d.bmp"%cnt, frame)
+		beforelT = time.time_ns()
+		cv2.putText(frame, f"{beforelT : .5f} sec",(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+		while os.path.exists('/result/before_%03d.bmp' % cnt):
+			print("before_%03d.bmp is exists" % cnt)
+			os.remove('/result/before_%03d.bmp' % cnt)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%03d.bmp"%cnt, frame)
 		
 		if floating_model:
 			input_data = (np.float32(input_data)-input_mean)/input_std
@@ -116,10 +117,10 @@ try:
 
 		afterT = time.time()
 		cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result/after_%02d.bmp' % cnt):
-			print("after_%02d.bmp is exists" % cnt)
-			os.remove('/result/after_%02d.bmp' % cnt)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%02d.bmp"%cnt, frame)
+		while os.path.exists('/result/after_%03d.bmp' % cnt):
+			print("after_%03d.bmp is exists" % cnt)
+			os.remove('/result/after_%03d.bmp' % cnt)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%03d.bmp"%cnt, frame)
 		out.write(frame)
 
 except KeyboardInterrupt:
