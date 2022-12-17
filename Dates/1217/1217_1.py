@@ -53,7 +53,7 @@ boxes_idx, classes_idx, scores_idx = 0,1,2
 video = cv2.VideoCapture(cv2.CAP_V4L2+0)
 video.set(3,resW)
 video.set(4,resH)
-fps = cap.get(cv2.CAP_PROP_FPS)
+fps = video.get(cv2.CAP_PROP_FPS)
 
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 out = cv2.VideoWriter(__file__+'.avi',fourcc,fps,(resW,resH))
