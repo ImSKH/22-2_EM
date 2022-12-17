@@ -127,7 +127,7 @@ try:
 			print("after_%03d.bmp is exists" % cnt)
 			os.remove('/result2/after_%03d.bmp' % cnt)
 		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result2/after_%03d.bmp"%cnt, frame)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result2/blurr_%03d.bmp"%cnt, frame)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result2/blurr_%03d.bmp"%cnt, blurred_img)
 
 		out.write(frame)
 		out2.write(blurred_img)
