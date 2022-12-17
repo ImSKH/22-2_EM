@@ -59,9 +59,11 @@ fps = video.get(cv2.CAP_PROP_FPS)
 
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 out = cv2.VideoWriter(__file__+'.avi',fourcc,fps,(resW,resH))
-
+out2 = cv2.VideoWriter(__file__+'.avi',fourcc,fps,(resW,resH))
 frame_rate_calc = 1
 freq = cv2.getTickFrequency()
+
+mask = np.zeros((480,640), dtype=np.uint8)
 
 cnt = 0
 try:
@@ -75,13 +77,10 @@ try:
 		frame_resized = cv2.resize(frame_rgb, (width, height))
 		input_data = np.expand_dims(frame_resized, axis = 0)
 
+		blurred_img = frame1.copy()
+
 		beforeT = time.time()
 		beforelT = time.time_ns() // 1000000
-		cv2.putText(frame, f"{beforelT : .5f} msec",(30,100),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result/before_%03d.bmp' % cnt):
-			print("before_%03d.bmp is exists" % cnt)
-			os.remove('/result/before_%03d.bmp' % cnt)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/before_%03d.bmp"%cnt, frame)
 		
 		if floating_model:
 			input_data = (np.float32(input_data)-input_mean)/input_std
@@ -99,6 +98,13 @@ try:
 				xmin = int(max(1, (boxes[i][1]*resW)))
 				ymax = int(min(resH, (boxes[i][2]*resH)+5))
 				xmax = int(min(resW, (boxes[i][3]*resW)+5))
+
+				for y in range(ymin,ymax):
+                	for x in range(xmin,xmax):
+                    	frame[y,x] = [255,255,255]
+                   		mask[y,x] = 255
+            	blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
+
 				cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 
 				object_name = labels[int(classes[i])]
@@ -117,11 +123,15 @@ try:
 
 		afterT = time.time()
 		cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result/after_%03d.bmp' % cnt):
+		while os.path.exists('/result2/after_%03d.bmp' % cnt):
 			print("after_%03d.bmp is exists" % cnt)
-			os.remove('/result/after_%03d.bmp' % cnt)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%03d.bmp"%cnt, frame)
+			os.remove('/result2/after_%03d.bmp' % cnt)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result2/after_%03d.bmp"%cnt, frame)
+		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result2/blurr_%03d.bmp"%cnt, frame)
+
 		out.write(frame)
+		out.write(blurred_img)
+
 
 except KeyboardInterrupt:
 	print("Quit Program")
