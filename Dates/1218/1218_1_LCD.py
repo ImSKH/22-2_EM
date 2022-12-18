@@ -7,7 +7,7 @@ import time
 from threading import Thread
 import importlib.util
 import time
-
+import I2C_LCD_driver
 
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 
@@ -63,9 +63,10 @@ out2 = cv2.VideoWriter(__file__+'2.avi',fourcc,5,(resW,resH))
 frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
+lcd = I2C_LCD_driver.lcd()
+lcd.backlight(1)
 
-
-cnt = 0
+#cnt = 0
 try:
 	while True:
 		cnt+=1
@@ -116,7 +117,9 @@ try:
 
 				cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
 				cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
-
+				##LCD disp
+				lcd.lcd_display_string(label,1,1)
+				lcd.lcd_display_string(str(int(scores[i]*100))+'%%',2,1)
 		cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
 		t2 = cv2.getTickCount()
 		time1 = (t2-t1)/freq
@@ -124,11 +127,11 @@ try:
 
 		afterT = time.time()
 		cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result/after_%03d.bmp' % cnt):
-			print("after_%03d.bmp is exists" % cnt)
-			os.remove('/result/after_%03d.bmp' % cnt)
-		cv2.imwrite("/result/after_%03d.bmp"%cnt, frame)
-		cv2.imwrite("/result/blurr_%03d.bmp"%cnt, blurred_img)
+		#while os.path.exists('/result/after_%03d.bmp' % cnt):
+		#	print("after_%03d.bmp is exists" % cnt)
+		#	os.remove('/result/after_%03d.bmp' % cnt)
+		#cv2.imwrite("/result/after_%03d.bmp"%cnt, frame)
+		#cv2.imwrite("/result/blurr_%03d.bmp"%cnt, blurred_img)
 
 		out.write(frame)
 		out2.write(blurred_img)
