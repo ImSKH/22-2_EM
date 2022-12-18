@@ -1,24 +1,21 @@
 import RPi.GPIO as GPIO
-
+import I2C_LCD_driver
 import time
 
 
 
 GPIO.setmode(GPIO.BCM)
 
-GPIO.setmode(6, GPIO.OUT)
-
-
 pirPin = 7
 
 GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
 
-
+lcd=I2C_LCD_driver.lcd()
 
 while True:
 
     if GPIO.input(pirPin) == GPIO.LOW:
-        GPIO.output(6, GPIO.HIGH)
+        lcd.lcd_display_string("YYYYY",1)
     else:
-        GPIO.output(6, GPIO.LOW)
+        lcd.lcd_display_string("NNNNN",1)
     time.sleep(0.2)
