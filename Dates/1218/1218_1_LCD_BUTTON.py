@@ -72,15 +72,16 @@ lcd.backlight(1)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.IN)
 state = 0
+inputIO = GPIO.input(17)
 try:
 	while True:
-		inputIO = GPIO.input(17)
-		if inputIO == False:
+		if inputIO == False & state == 0:
 			lcd.lcd_display_string("Press Button!",1)
 		else :
+			sleep(0.5)
 			state = ~state
 			print('state : '+str(state))
-			if state == 1:
+			if state == -1:
 				#lcd.lcd_display_string("Button pressed",1)
 				lcd.lcd_display_string("VideoCapturing...",1,)
 				t1 = cv2.getTickCount()
