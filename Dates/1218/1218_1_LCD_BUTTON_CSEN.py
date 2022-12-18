@@ -169,12 +169,6 @@ try:
 
 						afterT = time.time()
 						cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-						#while os.path.exists('/result/after_%03d.bmp' % cnt):
-						#	print("after_%03d.bmp is exists" % cnt)
-						#	os.remove('/result/after_%03d.bmp' % cnt)
-						#cv2.imwrite("/result/after_%03d.bmp"%cnt, frame)
-						#cv2.imwrite("/result/blurr_%03d.bmp"%cnt, blurred_img)
-
 						out.write(frame)
 						out2.write(blurred_img)
 				else:
