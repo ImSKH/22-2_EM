@@ -78,7 +78,6 @@ try:
 		if inputIO == False & state == 0:
 			lcd.lcd_display_string("Press Button!",1)
 		else :
-			sleep(0.5)
 			state = ~state
 			print('state : '+str(state))
 			if state == -1:
