@@ -143,9 +143,7 @@ try:
 			else :
 				now_dist = WaveSensor()
 				if(now_dist < 50):
-					lcd.lcd_clear()
 					lcd.lcd_display_string("VideoCapturing...",1)
-					time.sleep(0.3)
 					BrandDetect()
 				else :
 					lcd.lcd_clear()
