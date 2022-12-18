@@ -85,6 +85,7 @@ time.sleep(0.3)
 pre_dist = 0
 
 def CSEN():
+	global pre_dist
 	GPIO.output(TRIG, True)
 	time.sleep(0.00001)
 	GPIO.output(TRIG, False)
@@ -101,6 +102,7 @@ def CSEN():
 		dist = pre_dist
 
 	pre_dist = dist
+
 	return dist
 
 try:

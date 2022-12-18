@@ -9,10 +9,10 @@ import importlib.util
 import time
 import I2C_LCD_driver
 import RPi.GPIO as GPIO
-from tflite_runtime.interpreter import Interpreter
+
 #tflite_runtime pkg import
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
-
+from tflite_runtime.interpreter import Interpreter
 
 ################ Initializing ###################
 #LCD initializing
@@ -71,6 +71,7 @@ out = cv2.VideoWriter(filename+'2.avi',cv2.VideoWriter_fourcc('*DIVX'),10,(resW,
 ################ Function Define ##################
 ##WaveSensor func.
 def WaveSensor():
+	global pre_dist
 	GPIO.output(TRIG,True)
 	time.sleep(0.00001) ##pulse 1us
 	GPIO.output(TRIG,False)
