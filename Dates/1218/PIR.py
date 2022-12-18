@@ -18,11 +18,11 @@ try:
         if pir_state == True:
             print("undectected")
             lcd.lcd_display_string("NNNNN",1)
-            time.sleep(1)
+            time.sleep(0.2)
         else:
             print("dectected")
             lcd.lcd_display_string("YYYYY",1)
-            time.sleep(1)
+            time.sleep(0.2)
 
 except KeyboardInterrupt :
     lcd.backlight(0)

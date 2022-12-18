@@ -77,6 +77,7 @@ state = 0
 try:
 	while True:
 		inputIO = GPIO.input(17)
+		lcd.lcd_clear()
 		if inputIO == False:
 			if state == 0:
 				#print('state : '+str(state))
