@@ -8,7 +8,7 @@ GPIO.setmode(GPIO.BCM)
 
 pirPin = 7
 
-GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
+GPIO.setup(pirPin, GPIO.IN)
 
 lcd=I2C_LCD_driver.lcd()
 lcd.backlight(1)
