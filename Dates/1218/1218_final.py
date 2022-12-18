@@ -134,20 +134,18 @@ try:
 		inputIO = GPIO.input(BUTT)
 		if inputIO == False:
 			if state == 0:
-				#lcd.lcd_clear()
-				print(state)
+				lcd.lcd_clear()
 				lcd.lcd_display_string("Press Button!",1)
 				time.sleep(0.3)
 			else :
-				print(state)
 				now_dist = WaveSensor()
 				if(now_dist < 50):
 					lcd.lcd_display_string("VideoCapturing...",1)
 					BrandDetect()
 				else :
+					lcd.lcd_clear()
 					lcd.lcd_display_string("Out of Range",1)
 		else :
-			print(state)
 			time.sleep(0.5)
 			state = state ^ 1
 
