@@ -147,6 +147,7 @@ try:
 				else :
 					lcd.lcd_display_string("Out of Range",1)
 		else :
+			print(state)
 			time.sleep(0.5)
 			state = state ^ 1
 
