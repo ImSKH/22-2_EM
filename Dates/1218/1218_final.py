@@ -89,9 +89,8 @@ def WaveSensor():
 
 ##Detection and VideoWrite
 def BrandDetect():
-	ret, frame2 = video.read()
+	ret, frame1 = video.read()
 
-	frame1 = cv2.rotate(frame2, cv2.ROTATE_90_CLOCKWISE)
 	frame = frame1.copy()
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame_resized = cv2.resize(frame_rgb, (width, height))
@@ -115,7 +114,7 @@ def BrandDetect():
 
 			for y in range(ymin, ymax):
 				for x in range(xmin, xmax):
-					mask[x,y] = 255
+					mask[y,x] = 255
 			blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
 			cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 			object_name = labels[int(classes[i])]
