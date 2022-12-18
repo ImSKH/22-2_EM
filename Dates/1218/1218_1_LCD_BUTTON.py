@@ -76,6 +76,7 @@ state = 0
 try:
 	while True:
 		inputIO = GPIO.input(17)
+		print('inputIO : '+ str(inputIO))
 		if inputIO == True:
 			state = ~state
 		if state == 0:
