@@ -16,13 +16,13 @@ try:
     while True:
         pir_state = GPIO.input(pirPin)
         if pir_state == True:
+            print("undectected")
+            lcd.lcd_display_string("NNNNN",1)
+            time.sleep(1)
+        else:
             print("dectected")
             lcd.lcd_display_string("YYYYY",1)
             time.sleep(1)
-        else:
-            print("Undectected")
-            lcd.lcd_display_string("NNNNN",1)
-            time.sleep(0.1)
 
 except KeyboardInterrupt :
     lcd.backlight(0)
