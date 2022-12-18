@@ -73,11 +73,13 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.IN)
 state = 0
 
+
 try:
 	while True:
 		inputIO = GPIO.input(17)
 		if inputIO == False:
 			if state == 0:
+				print('state : '+str(state))
 				lcd.lcd_display_string("Press Button!",1)
 			if state == 1:
 				print('state : '+str(state))
@@ -147,7 +149,7 @@ try:
 					out.write(frame)
 					out2.write(blurred_img)
 		else :
-			sleep(0.2)
+			sleep(0.5)
 			state = state ^ 1
 
 except KeyboardInterrupt:
