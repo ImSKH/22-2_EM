@@ -115,7 +115,7 @@ def BrandDetect():
 
 			for y in range(ymin, ymax):
 				for x in range(xmin, xmax):
-					mask[y,x] = 255
+					mask[x,y] = 255
 			blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
 			cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 			object_name = labels[int(classes[i])]
