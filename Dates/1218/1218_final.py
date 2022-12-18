@@ -117,7 +117,7 @@ def BrandDetect():
 			cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 			object_name = labels[int(classes[i])]
 
-			label = '%s: %d%%' % (object_name, int(scores[i]*100))
+			label = '%06s: %d%%' % (object_name, int(scores[i]*100))
 			labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
 			label_ymin = max(ymin, labelSize[1]+10)
 
