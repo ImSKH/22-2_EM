@@ -70,14 +70,14 @@ lcd.backlight(1)
 
 #BUTTON setting
 GPIO.setmode(GPIO.BCM)
-GPIO.setmode(6, GPIO.OUT)
-GPIO.setmode(17, GPIO.IN)
+GPIO.setup(6, GPIO.OUT)
+GPIO.setup(17, GPIO.IN)
 state = 0
 try:
 	while True:
 		inputIO = GPIO.input(17)
 		if inputIO == False:
-			state = !state
+			state = ~state
 		if state == 0:
 			lcd.lcd_display_string("Press Button!",1)
 		if state == 1:
