@@ -69,6 +69,7 @@ lcd = I2C_LCD_driver.lcd()
 lcd.backlight(1)
 
 #BUTTON setting
+GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(6, GPIO.OUT)
 GPIO.setup(17, GPIO.IN)
@@ -76,12 +77,13 @@ state = 0
 try:
 	while True:
 		inputIO = GPIO.input(17)
-		if inputIO == True:
-			state = ~state
-			lcd.lcd_display_string("Button pressed",1)
-		if state == 0:
+		#if inputIO == True:
+			#state = ~state
+			#lcd.lcd_display_string("Button pressed",1)
+		if inputIO == False:
 			lcd.lcd_display_string("Press Button!",1)
-		if state == 1:
+		else :
+			#lcd.lcd_display_string("Button pressed",1)
 			t1 = cv2.getTickCount()
 			ret, frame1 = video.read()
 
@@ -158,3 +160,5 @@ except KeyboardInterrupt:
 
 
 
+finally:
+	GPIO.cleanup()
