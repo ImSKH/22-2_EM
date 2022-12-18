@@ -69,7 +69,7 @@ lcd.backlight(1)
 #cnt = 0
 try:
 	while True:
-		cnt+=1
+		#cnt+=1
 		t1 = cv2.getTickCount()
 		ret, frame1 = video.read()
 
