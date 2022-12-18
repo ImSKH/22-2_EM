@@ -37,7 +37,7 @@ MODEL_NAME = '../model/'
 GRAPH_NAME = 'detect.tflite'
 LABEL_NAME = 'labelmap.txt'
 min_conf_threshold = float(0.5)
-resW, resH = 600, 600
+resW, resH = 640, 480
 PATH_TO_CKPT = os.path.join(os.getcwd(), MODEL_NAME, GRAPH_NAME)
 PATH_TO_LABELS = os.path.join(os.getcwd(), MODEL_NAME, LABEL_NAME)
 
