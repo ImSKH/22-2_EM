@@ -37,4 +37,5 @@ try :
 
 except KeyboardInterrupt:
 	print("Quit Program")
+	lcd.backlight(0)
 	GPIO.cleanup()
