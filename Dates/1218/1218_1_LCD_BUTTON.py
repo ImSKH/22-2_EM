@@ -78,10 +78,10 @@ try:
 		inputIO = GPIO.input(17)
 		print('inputIO : '+ str(inputIO))
 		if inputIO == True:
-			state = ~state
+			state = state ^ 1
 		if state == 0:
 			lcd.lcd_display_string("Press Button!",1)
-		if state == -1:
+		if state == 1:
 			print('state : '+str(state))
 			#lcd.lcd_display_string("Button pressed",1)
 			lcd.lcd_display_string("VideoCapturing...",1,)
