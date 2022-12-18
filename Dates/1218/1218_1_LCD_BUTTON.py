@@ -8,6 +8,7 @@ from threading import Thread
 import importlib.util
 import time
 import I2C_LCD_driver
+import RPi.GPIO as GPIO
 
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 
