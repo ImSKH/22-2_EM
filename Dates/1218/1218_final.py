@@ -86,9 +86,18 @@ def WaveSensor():
 	pre_dist = dist 
 	return dist
 
+##Img Rotate func.
+def Rotate(src):
+	dst = cv2.transpose(src)
+	dst = cv2.flip(dst, 1)
+
+	return dst
+
 ##Detection and VideoWrite
 def BrandDetect():
 	ret, frame1 = video.read()
+
+	frame1 = Rotate(frame1)
 	frame = frame1.copy()
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame_resized = cv2.resize(frame_rgb, (width, height))
@@ -129,6 +138,7 @@ def BrandDetect():
 	out2.write(blurred_img)
 ################ Function Define END ###################
 
+
 try:
 	while True:
 		inputIO = GPIO.input(BUTT)
@@ -145,6 +155,7 @@ try:
 				else :
 					lcd.lcd_clear()
 					lcd.lcd_display_string("Out of Range",1)
+					time.sleep(0.3)
 		else :
 			time.sleep(0.5)
 			state = state ^ 1
