@@ -64,7 +64,7 @@ video.set(3,resW)
 video.set(4,resH)
 filename = __file__.split('.')[0]
 out = cv2.VideoWriter(filename+'.avi',cv2.VideoWriter_fourcc(*'DIVX'),10,(resW,resH))
-out = cv2.VideoWriter(filename+'2.avi',cv2.VideoWriter_fourcc(*'DIVX'),10,(resW,resH))
+out2 = cv2.VideoWriter(filename+'2.avi',cv2.VideoWriter_fourcc(*'DIVX'),10,(resW,resH))
 ################ Initializing END ###################
 
 
@@ -89,7 +89,7 @@ def WaveSensor():
 ##Detection and VideoWrite
 def BrandDetect():
 	ret, frame1 = video.read()
-	frame = fram1.copy()
+	frame = frame1.copy()
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame_resized = cv2.resize(frame_rgb, (width, height))
 	input_data = np.expand_dims(frame_resized, axis = 0)
