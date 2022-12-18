@@ -86,18 +86,12 @@ def WaveSensor():
 	pre_dist = dist 
 	return dist
 
-##Img Rotate func.
-def Rotate(src):
-	dst = cv2.transpose(src)
-	dst = cv2.flip(dst, 1)
-
-	return dst
 
 ##Detection and VideoWrite
 def BrandDetect():
-	ret, frame1 = video.read()
+	ret, frame2 = video.read()
 
-	frame1 = Rotate(frame1)
+	frame1 = cv2.rotate(frame2, cv2.ROTATE_90_CLOCKWISE)
 	frame = frame1.copy()
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame_resized = cv2.resize(frame_rgb, (width, height))
