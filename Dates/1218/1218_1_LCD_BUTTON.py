@@ -71,35 +71,35 @@ lcd.backlight(1)
 #BUTTON setting
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.IN)
+prestate = 0;
 state = 0
 inputIO = GPIO.input(17)
 try:
 	while True:
-		if inputIO == False & state == 0:
-			lcd.lcd_display_string("Press Button!",1)
-		else :
+		if inputIO == True:
 			state = ~state
+		if state == 0:
+			lcd.lcd_display_string("Press Button!",1)
+		if state == -1:
 			print('state : '+str(state))
-			if state == -1:
-				#lcd.lcd_display_string("Button pressed",1)
-				lcd.lcd_display_string("VideoCapturing...",1,)
-				t1 = cv2.getTickCount()
-				ret, frame1 = video.read()
+			#lcd.lcd_display_string("Button pressed",1)
+			lcd.lcd_display_string("VideoCapturing...",1,)
+			t1 = cv2.getTickCount()
+			ret, frame1 = video.read()
 
-				frame = frame1.copy()
-				frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-				frame_resized = cv2.resize(frame_rgb, (width, height))
-				input_data = np.expand_dims(frame_resized, axis = 0)
+			frame = frame1.copy()
+			frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+			frame_resized = cv2.resize(frame_rgb, (width, height))
+			input_data = np.expand_dims(frame_resized, axis = 0)
 				
-				mask = np.zeros((480,640), dtype=np.uint8)
-				blurred_img = frame1.copy()
+			mask = np.zeros((480,640), dtype=np.uint8)
+			blurred_img = frame1.copy()
 
-				beforeT = time.time()
-				beforelT = time.time_ns() // 1000000
-				
-				if floating_model:
-					input_data = (np.float32(input_data)-input_mean)/input_std
-
+			beforeT = time.time()
+			beforelT = time.time_ns() // 1000000
+			
+			if floating_model:
+				input_data = (np.float32(input_data)-input_mean)/input_std
 				interpreter.set_tensor(input_detail[0]['index'], input_data)
 				interpreter.invoke()
 
