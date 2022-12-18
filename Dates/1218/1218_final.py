@@ -136,6 +136,7 @@ try:
 			if state == 0:
 				lcd.lcd_clear()
 				lcd.lcd_display_string("Press Button!",1)
+				time.sleep(0.3)
 			else :
 				now_dist = WaveSensor()
 				if(now_dist < 50):
