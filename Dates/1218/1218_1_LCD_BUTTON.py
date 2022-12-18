@@ -82,7 +82,7 @@ try:
 			lcd.lcd_display_string("Press Button!",1)
 		else :
 			#lcd.lcd_display_string("Button pressed",1)
-			lcd.lcd_display_string("VideoCapturing...",1,1)
+			lcd.lcd_display_string("VideoCapturing...",1,)
 			t1 = cv2.getTickCount()
 			ret, frame1 = video.read()
 
