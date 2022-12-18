@@ -95,7 +95,7 @@ def BrandDetect():
 	frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame_resized = cv2.resize(frame_rgb, (width, height))
 	input_data = np.expand_dims(frame_resized, axis = 0)
-	mask = np.zeros((resW, resH), dtype=np.uint8)
+	mask = np.zeros((resH, resW), dtype=np.uint8)
 	blurred_img = frame1.copy()
 	input_data = (np.float32(input_data)-input_mean)/input_std
 	interpreter.set_tensor(input_details[0]['index'], input_data)
