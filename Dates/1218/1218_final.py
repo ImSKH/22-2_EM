@@ -139,9 +139,8 @@ try:
 				if(now_dist < 50):
 					lcd.lcd_display_string("VideoCapturing...",1)
 					BrandDetect()
-
-			else :
-				lcd.lcd_display_string("Out of Range",1)
+				else :
+					lcd.lcd_display_string("Out of Range",1)
 		else :
 			time.sleep(0.5)
 			state = state ^ 1
