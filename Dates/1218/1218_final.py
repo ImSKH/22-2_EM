@@ -134,6 +134,7 @@ try:
 		inputIO = GPIO.input(BUTT)
 		if inputIO == False:
 			if state == 0:
+				lcd.lcd_clear()
 				lcd.lcd_display_string("Press Button!",1)
 			else :
 				now_dist = WaveSensor()
