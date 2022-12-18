@@ -1,4 +1,4 @@
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 import I2C_LCD_driver
 
