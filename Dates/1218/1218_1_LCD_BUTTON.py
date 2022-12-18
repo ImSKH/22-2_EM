@@ -149,7 +149,11 @@ try:
 					out.write(frame)
 					out2.write(blurred_img)
 		else :
+<<<<<<< HEAD
 			sleep(0.5)
+=======
+			time.sleep(0.3)
+>>>>>>> 24ff9ea6e79d4bf0b2e66491dd09683f94dff75b
 			state = state ^ 1
 
 except KeyboardInterrupt:
