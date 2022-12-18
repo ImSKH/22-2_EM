@@ -148,8 +148,6 @@ try:
 
 except KeyboardInterrupt:
 	print("Quit Program!")	
-	
-finally:
 	lcd.lcd_clear()
 	lcd.backlight(0)
 	video.release()
