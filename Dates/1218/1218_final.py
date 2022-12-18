@@ -63,8 +63,8 @@ video = cv2.VideoCapture(cv2.CAP_V4L2+0)
 video.set(3,resW)
 video.set(4,resH)
 filename = __file__.split('.')[0]
-out = cv2.VideoWriter(filename+'.avi',cv2.VideoWriter_fourcc('*DIVX'),10,(resW,resH))
-out = cv2.VideoWriter(filename+'2.avi',cv2.VideoWriter_fourcc('*DIVX'),10,(resW,resH))
+out = cv2.VideoWriter(filename+'.avi',cv2.VideoWriter_fourcc(*'DIVX'),10,(resW,resH))
+out = cv2.VideoWriter(filename+'2.avi',cv2.VideoWriter_fourcc(*'DIVX'),10,(resW,resH))
 ################ Initializing END ###################
 
 
