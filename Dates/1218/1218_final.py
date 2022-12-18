@@ -139,6 +139,7 @@ try:
 				lcd.lcd_display_string("Press Button!",1)
 				time.sleep(0.3)
 			else :
+				print(state)
 				now_dist = WaveSensor()
 				if(now_dist < 50):
 					lcd.lcd_display_string("VideoCapturing...",1)
