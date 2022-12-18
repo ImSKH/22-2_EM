@@ -58,8 +58,8 @@ video.set(4,resH)
 fps = video.get(cv2.CAP_PROP_FPS)
 
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-out = cv2.VideoWriter(__file__+'.avi',fourcc,15,(resW,resH))
-out2 = cv2.VideoWriter(__file__+'2.avi',fourcc,15,(resW,resH))
+out = cv2.VideoWriter(__file__+'.avi',fourcc,10,(resW,resH))
+out2 = cv2.VideoWriter(__file__+'2.avi',fourcc,10,(resW,resH))
 frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
@@ -124,11 +124,11 @@ try:
 
 		afterT = time.time()
 		cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-		while os.path.exists('/result2/after_%03d.bmp' % cnt):
+		while os.path.exists('/result/after_%03d.bmp' % cnt):
 			print("after_%03d.bmp is exists" % cnt)
-			os.remove('/result2/after_%03d.bmp' % cnt)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/after_%03d.bmp"%cnt, frame)
-		cv2.imwrite("/home/pi/Final/22-2_EM/Dates/1217/result/blurr_%03d.bmp"%cnt, blurred_img)
+			os.remove('/result/after_%03d.bmp' % cnt)
+		cv2.imwrite("/result/after_%03d.bmp"%cnt, frame)
+		cv2.imwrite("/result/blurr_%03d.bmp"%cnt, blurred_img)
 
 		out.write(frame)
 		out2.write(blurred_img)
