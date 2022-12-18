@@ -76,9 +76,10 @@ state = 0
 try:
 	while True:
 		inputIO = GPIO.input(17)
-		print('inputIO : '+ str(inputIO))
+		#print('inputIO : '+ str(inputIO))
 		if inputIO == True:
-			print("state inverse")
+			print(".")
+			print(".")
 			state = state ^ 1
 		if state == 0:
 			lcd.lcd_display_string("Press Button!",1)
