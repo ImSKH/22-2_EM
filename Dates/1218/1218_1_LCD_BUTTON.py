@@ -69,9 +69,7 @@ lcd = I2C_LCD_driver.lcd()
 lcd.backlight(1)
 
 #BUTTON setting
-GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(6, GPIO.OUT)
 GPIO.setup(17, GPIO.IN)
 state = 0
 try:
@@ -84,6 +82,7 @@ try:
 			lcd.lcd_display_string("Press Button!",1)
 		else :
 			#lcd.lcd_display_string("Button pressed",1)
+			lcd.lcd_display_string("VideoCapturing...",1,1)
 			t1 = cv2.getTickCount()
 			ret, frame1 = video.read()
 
@@ -133,7 +132,6 @@ try:
 					cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
 					##LCD disp
 					lcd.lcd_display_string(label,2,3)
-					lcd.lcd_display_string("VideoCapturing...",1,1)
 			cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
 			t2 = cv2.getTickCount()
 			time1 = (t2-t1)/freq
@@ -157,8 +155,6 @@ except KeyboardInterrupt:
 	video.release()
 	out.release()
 	out2.release()
-
-
 
 finally:
 	GPIO.cleanup()
