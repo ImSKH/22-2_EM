@@ -76,8 +76,9 @@ state = 0
 try:
 	while True:
 		inputIO = GPIO.input(17)
-		if inputIO == False:
+		if inputIO == True:
 			state = ~state
+			lcd.lcd_display_string("Button pressed",1)
 		if state == 0:
 			lcd.lcd_display_string("Press Button!",1)
 		if state == 1:
