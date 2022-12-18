@@ -75,79 +75,77 @@ state = 0
 try:
 	while True:
 		inputIO = GPIO.input(17)
-		#if inputIO == True:
-			#state = ~state
-			#lcd.lcd_display_string("Button pressed",1)
-		if inputIO == False:
+		if inputIO == False & state == 0:
 			lcd.lcd_display_string("Press Button!",1)
 		else :
-			#lcd.lcd_display_string("Button pressed",1)
-			lcd.lcd_display_string("VideoCapturing...",1,)
-			t1 = cv2.getTickCount()
-			ret, frame1 = video.read()
+			state = ~state
+			if state == 1:
+				#lcd.lcd_display_string("Button pressed",1)
+				lcd.lcd_display_string("VideoCapturing...",1,)
+				t1 = cv2.getTickCount()
+				ret, frame1 = video.read()
 
-			frame = frame1.copy()
-			frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-			frame_resized = cv2.resize(frame_rgb, (width, height))
-			input_data = np.expand_dims(frame_resized, axis = 0)
-			
-			mask = np.zeros((480,640), dtype=np.uint8)
-			blurred_img = frame1.copy()
+				frame = frame1.copy()
+				frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+				frame_resized = cv2.resize(frame_rgb, (width, height))
+				input_data = np.expand_dims(frame_resized, axis = 0)
+				
+				mask = np.zeros((480,640), dtype=np.uint8)
+				blurred_img = frame1.copy()
 
-			beforeT = time.time()
-			beforelT = time.time_ns() // 1000000
-			
-			if floating_model:
-				input_data = (np.float32(input_data)-input_mean)/input_std
+				beforeT = time.time()
+				beforelT = time.time_ns() // 1000000
+				
+				if floating_model:
+					input_data = (np.float32(input_data)-input_mean)/input_std
 
-			interpreter.set_tensor(input_detail[0]['index'], input_data)
-			interpreter.invoke()
+				interpreter.set_tensor(input_detail[0]['index'], input_data)
+				interpreter.invoke()
 
-			boxes = interpreter.get_tensor(output_detail[boxes_idx]['index'])[0]
-			classes = interpreter.get_tensor(output_detail[classes_idx]['index'])[0]
-			scores = interpreter.get_tensor(output_detail[scores_idx]['index'])[0]
+				boxes = interpreter.get_tensor(output_detail[boxes_idx]['index'])[0]
+				classes = interpreter.get_tensor(output_detail[classes_idx]['index'])[0]
+				scores = interpreter.get_tensor(output_detail[scores_idx]['index'])[0]
 
-			for i in range(len(scores)):
-				if((scores[i]>min_conf_threshold) and (scores[i]<=1.0)):
-					ymin = int(max(1, (boxes[i][0]*resH)))
-					xmin = int(max(1, (boxes[i][1]*resW)))
-					ymax = int(min(resH, (boxes[i][2]*resH)+5))
-					xmax = int(min(resW, (boxes[i][3]*resW)+5))
+				for i in range(len(scores)):
+					if((scores[i]>min_conf_threshold) and (scores[i]<=1.0)):
+						ymin = int(max(1, (boxes[i][0]*resH)))
+						xmin = int(max(1, (boxes[i][1]*resW)))
+						ymax = int(min(resH, (boxes[i][2]*resH)+5))
+						xmax = int(min(resW, (boxes[i][3]*resW)+5))
 
-					for y in range(ymin,ymax):
-						for x in range(xmin,xmax):
-							#frame[y,x] = [255,255,255]
-							mask[y,x] = 255
-					blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
+						for y in range(ymin,ymax):
+							for x in range(xmin,xmax):
+								#frame[y,x] = [255,255,255]
+								mask[y,x] = 255
+						blurred_img = cv2.inpaint(frame, mask, 5, cv2.INPAINT_TELEA)
 
-					cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
+						cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10,255,0), 2)
 
-					object_name = labels[int(classes[i])]
+						object_name = labels[int(classes[i])]
 
-					label = '%s: %d%%' % (object_name, int(scores[i]*100))
-					labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
-					label_ymin = max(ymin, labelSize[1]+10)
+						label = '%s: %d%%' % (object_name, int(scores[i]*100))
+						labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
+						label_ymin = max(ymin, labelSize[1]+10)
 
-					cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
-					cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
-					##LCD disp
-					lcd.lcd_display_string(label,2,3)
-			cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
-			t2 = cv2.getTickCount()
-			time1 = (t2-t1)/freq
-			frame_rate_calc = 1/time1
+						cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
+						cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
+						##LCD disp
+						lcd.lcd_display_string(label,2,3)
+				cv2.putText(frame, 'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
+				t2 = cv2.getTickCount()
+				time1 = (t2-t1)/freq
+				frame_rate_calc = 1/time1
 
-			afterT = time.time()
-			cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
-			#while os.path.exists('/result/after_%03d.bmp' % cnt):
-			#	print("after_%03d.bmp is exists" % cnt)
-			#	os.remove('/result/after_%03d.bmp' % cnt)
-			#cv2.imwrite("/result/after_%03d.bmp"%cnt, frame)
-			#cv2.imwrite("/result/blurr_%03d.bmp"%cnt, blurred_img)
+				afterT = time.time()
+				cv2.putText(frame, f"{afterT-beforeT : .5f} sec",(30,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+				#while os.path.exists('/result/after_%03d.bmp' % cnt):
+				#	print("after_%03d.bmp is exists" % cnt)
+				#	os.remove('/result/after_%03d.bmp' % cnt)
+				#cv2.imwrite("/result/after_%03d.bmp"%cnt, frame)
+				#cv2.imwrite("/result/blurr_%03d.bmp"%cnt, blurred_img)
 
-			out.write(frame)
-			out2.write(blurred_img)
-
+				out.write(frame)
+				out2.write(blurred_img)
 
 except KeyboardInterrupt:
 	print("Quit Program")
