@@ -135,6 +135,7 @@ try:
 		if inputIO == False:
 			if state == 0:
 				#lcd.lcd_clear()
+				print(state)
 				lcd.lcd_display_string("Press Button!",1)
 				time.sleep(0.3)
 			else :
