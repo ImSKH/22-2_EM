@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import I2C_LCD_driver.py
+import I2C_LCD_driver
 
 GPIO.setmode(GPIO.BCM)
 #GPIO.setup(6, GPIO.OUT)
