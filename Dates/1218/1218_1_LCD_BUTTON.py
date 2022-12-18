@@ -71,11 +71,11 @@ lcd.backlight(1)
 #BUTTON setting
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.IN)
-prestate = 0;
 state = 0
-inputIO = GPIO.input(17)
+
 try:
 	while True:
+		inputIO = GPIO.input(17)
 		if inputIO == True:
 			state = ~state
 		if state == 0:
