@@ -28,7 +28,7 @@ state = 0
 #Wave Sensor initializing
 TRIG, ECHO = 23,24
 GPIO.setup(TRIG, GPIO.OUT)
-GPIO.setup(EHCO, GPIO.IN)
+GPIO.setup(ECHO, GPIO.IN)
 GPIO.output(TRIG, False)
 pre_dist = 0
 
