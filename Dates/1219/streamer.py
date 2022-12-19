@@ -12,8 +12,6 @@ import imutils
 
 class Streamer :
 	def __init__(self):
-		if cv2.ocl.haveOpenCL(True):
-			cv2.ocl.setUseOpenCL(True)
 		print('OpenCL : ', cv2.ocl.haveOpenCL())
 		self.capture = None
 		self.thread = None
