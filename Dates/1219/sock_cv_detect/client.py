@@ -143,7 +143,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
 	try:
 		while True:
 			inputIO = GPIO.input(BUTT)
-			if inputIP == False:
+			if inputIO == False:
 				if state == 0:
 					lcd.lcd_clear()
 					lcd.lcd_display_string("Press Button!",1)
