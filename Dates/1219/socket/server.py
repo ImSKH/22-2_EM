@@ -7,7 +7,8 @@ UDP_PORT = 8080
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind((UDP_IP, UDP_PORT))
-
+sock.listen()
+client_socket, address = sock.accept()
 s = [b'\xff'*46080 for x in range(20)]
 
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
