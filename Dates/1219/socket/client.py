@@ -13,7 +13,7 @@ try:
 	while True:
 		ret, frame = cap.read()
 		d = frame.flatten()
-		s = d.tostring()
+		s = d.tobytes()
 
 		for i in range(20):
 			sock.sendto(bytes[i]+s[i*46080:(i+1)*46080], (UDP_IP, UDP_PORT))
