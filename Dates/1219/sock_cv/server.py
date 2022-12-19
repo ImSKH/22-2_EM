@@ -1,3 +1,4 @@
+##https://blog.naver.com/PostView.nhn?blogId=dldudcks1779&logNo=222024824853
 import socket
 import struct
 import pickle
@@ -38,7 +39,7 @@ while True:
 	print("Received frame size : {} bytes".format(frame_size))
 
 	frame = pickle.loads(frame_data)
-
+	frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
 	frame = cv2.imshow('Frame', frame)
 
 	if cv2.waitKey(1)&0xFF == ord("q"):
