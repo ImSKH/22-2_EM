@@ -8,4 +8,4 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 server_socket.bind((host, port))
 
-data, address = server_socket.recvform(200)
+data, address = server_socket.recvfrom(200)
