@@ -2,7 +2,7 @@ import socket
 import numpy
 import cv2
 
-UDP_IP='192.168.45.16'
+UDP_IP='192.168.45.179'
 UDP_PORT = 8080
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
