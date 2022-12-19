@@ -17,7 +17,7 @@ try:
 	while True:
 		pciture = b''
 
-		data, addr = sock.recvfrom(46081)
+		data, addr = sock.recv(46081)
 		s[data[0]] = data[1:46081]
 
 		if data[0] == 19:
