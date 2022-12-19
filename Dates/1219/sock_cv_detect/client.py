@@ -132,6 +132,12 @@ def BrandDetect():
 	return blurred_img
 	#out.write(frame)
 	#out2.write(blurred_img)
+
+def SockCommunication(frame) :
+	retval, resframe = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 90])
+	resframe = pickle.dumps(resframe)
+	print("Transmitted frame size : {} bytes".format(len(resframe)))
+	return resframe
 ################ Function Define END ###################
 
 
@@ -152,10 +158,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
 					now_dist = WaveSensor()
 					if(now_dist < 50):
 						lcd.lcd_display_string("VideoCapturing...",1)
-						outframe = BrandDetect()
-						retval, outframe = cv2.imencode('.jpg', outframe, [cv2.IMWRITE_JPEG_QUALITY, 90])
-						outframe = pickle.dumps(outframe)
-						print("Transmitted frame size : {} bytes".format(len(outframe)))
+						frame = BrandDetect()
+						outframe = SockCommunication(frame)
 						client_socket.sendall(struct.pack(">L",len(outframe))+outframe)
 					else :
 						lcd.lcd_clear()
