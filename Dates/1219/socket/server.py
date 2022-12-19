@@ -5,7 +5,7 @@ import cv2
 UDP_IP='192.168.45.179'
 UDP_PORT = 8080
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAN)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
 sock.listen()
 client_socket, address = sock.accept()

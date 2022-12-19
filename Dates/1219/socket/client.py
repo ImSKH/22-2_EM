@@ -5,7 +5,7 @@ import cv2
 UDP_IP = '192.168.45.179'
 UDP_PORT = 8080
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAN)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 cap = cv2.VideoCapture(cv2.CAP_V4L2+0)
 
