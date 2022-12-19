@@ -26,7 +26,7 @@ try:
 
 		frame = numpy.fromstring(picture, dtype = numpy.uint8)
 		frame = frame.reshape(480,640,3)
-
+		cv2.imshow("frame", frame)
 		out.write(frame)
 except KeyboardInterrupt:
 	quit()
