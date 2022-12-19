@@ -5,7 +5,7 @@ import platform
 import numpy as np
 from threading import Thread
 from queue	import Queue
-sys.path.append('/home/pi/.local/lib/python3.9/site-package')
+sys.path.append('/home/pi/.local/lib/python3.9/')
 import imutils
 
 class Streamer :
