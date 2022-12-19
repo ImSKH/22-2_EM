@@ -13,7 +13,7 @@ sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 from tflite_runtime.interpreter import Interpreter
 
 #TFLite Model initializing
-MODEL_NAME = '../model/'
+MODEL_NAME = '../../model/'
 GRAPH_NAME = 'detect.tflite'
 LABEL_NAME = 'labelmap.txt'
 min_conf_threshold = float(0.5)
