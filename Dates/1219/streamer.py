@@ -24,7 +24,7 @@ class Streamer :
 	def run(self, src = 0):
 		self.stop()
 		if platform.system() == 'Windows' :
-			self.capture = cv2.VideoCapture(src, cv2.CAP_DSHOW)
+			self.capture = cv2.VideoCapture(src, cv2.CAP_V4L2+0)
 		else:
 			self.capture = cv2.VideoCapture(src)
 		self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
