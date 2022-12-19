@@ -10,6 +10,8 @@ server_socket.bind((host, port))
 
 while True:
 	data, address = server_socket.recvfrom(200)
+	server_socket.sendto(data, address)
+	
 	print("Server received : ", data.decode())
 	print("Send Client IP : ", address[0])
 	print("Send Client Port : ", address[1])
