@@ -28,7 +28,7 @@ class Streamer :
 		if platform.system() == 'Windows' :
 			self.capture = cv2.VideoCapture(src, cv2.CAP_V4L2+0)
 		else:
-			self.capture = cv2.VideoCapture(src)
+			self.capture = cv2.VideoCapture(src, cv2.CAP_V4L2+0)
 		self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
 		self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
 		if self.thread is None:
