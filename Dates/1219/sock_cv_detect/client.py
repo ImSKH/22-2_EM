@@ -7,10 +7,35 @@ import numpy as np
 import sys
 import time
 import importlib.util
+import I2C_LCD_driver
+import RPi.GPIO as GPIO
+
 
 #tflite_runtime pkg import
 sys.path.append("/home/pi/.local/lib/python3.9/site-packages/")
 from tflite_runtime.interpreter import Interpreter
+
+################ Initializing ###################
+#Socket initializing
+ip = '192.168.45.179'
+port = 8080
+
+#LCD initializing
+lcd = I2C_LCD_driver.lcd()
+lcd.backlight(1)
+
+#Button initializing
+GPIO.setmode(GPIO.BCM)
+BUTT = 17
+GPIO.setup(BUTT, GPIO.IN)
+state = 0
+
+#Wave Sensor initializing
+TRIG, ECHO = 23,24
+GPIO.setup(TRIG, GPIO.OUT)
+GPIO.setup(ECHO, GPIO.IN)
+GPIO.output(TRIG, False)
+pre_dist = 0
 
 #TFLite Model initializing
 MODEL_NAME = '../../model/'
@@ -46,6 +71,24 @@ filename = __file__.split('.')[0]
 out = cv2.VideoWriter(filename+'.avi',cv2.VideoWriter_fourcc(*'DIVX'),7,(resW,resH))
 out2 = cv2.VideoWriter(filename+'2.avi',cv2.VideoWriter_fourcc(*'DIVX'),7,(resW,resH))
 ################ Initializing END ###################
+
+################ Function Define ##################
+##WaveSensor func.
+def WaveSensor():
+	global pre_dist
+	GPIO.output(TRIG,True)
+	time.sleep(0.00001) ##pulse 1us
+	GPIO.output(TRIG,False)
+	while GPIO.input(ECHO) == 0:
+		start = time.time()
+	while GPIO.input(ECHO) == 1:
+		stop = time.time()
+	ctime = stop-start
+	dist = ctime*34300/2
+	if dist>1022:
+		dist = pre_dist
+	pre_dist = dist 
+	return dist
 
 ##Detection and VideoWrite
 def BrandDetect():
@@ -85,28 +128,46 @@ def BrandDetect():
 
 			cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
 			cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
+			lcd.lcd_display_string(label,2)
 	return frame
 	#out.write(frame)
 	#out2.write(blurred_img)
 ################ Function Define END ###################
 
 
-ip = '192.168.45.179'
-port = 8080
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
 	client_socket.connect((ip,port))
 
 	print("Connection Successed")
+	try:
+		while True:
+			inputIO = GPIO.input(BUTT)
+			if inputIP == False:
+				if state == 0:
+					lcd.lcd_clear()
+					lcd.lcd_display_string("Press Button!",1)
+					time.sleep(0.3)
+				else :
+					now_dist = WaveSensor()
+					if(now_dist < 50):
+						lcd.lcd_display_string("VideoCapturing...",1)
+						outframe = BrandDetect()
+						retval, outframe = cv2.imencode('.jpg', outframe, [cv2.IMWRITE_JPEG_QUALITY, 90])
+						outframe = pickle.dumps(outframe)
+						print("Transmitted frame size : {} bytes".format(len(outframe)))
+						client_socket.sendall(struct.pack(">L",len(outframe))+outframe)
+					else :
+						lcd.lcd_clear()
+						lcd.lcd_display_string("Out of Range",1)
+						time.sleep(0.3)
+			else :
+				time.sleep(0.5)
+				state = state^1
 
-	while True:
-		outframe = BrandDetect()
-		retval, outframe = cv2.imencode('.jpg', outframe, [cv2.IMWRITE_JPEG_QUALITY, 90])
-
-		outframe = pickle.dumps(outframe)
-
-		print("Transmitted frame size : {} bytes".format(len(outframe)))
-
-		client_socket.sendall(struct.pack(">L",len(outframe))+outframe)
-
-capture.release()
+	except KeyboardInterrupt:
+		print("Quit Program!")
+		lcd.lcd_clear()
+		lcd.backlight(0)
+		video.release()
+		GPIO.cleanup()
