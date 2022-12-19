@@ -30,7 +30,7 @@ class Streamer :
 		self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
 		self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
 		if self.thread is None:
-			self.thread = Thread(target=self.update, args())
+			self.thread = Thread(target=self.update)
 			self.thread.daemon = False
 			self.thread.start()
 		self.started = True
