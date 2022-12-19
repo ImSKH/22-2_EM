@@ -2,7 +2,7 @@
 import socket
 import cv2
 
-UDP_IP = '0.0.0.1'
+UDP_IP = '192.168.222.1'
 UDP_PORT = 5000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
