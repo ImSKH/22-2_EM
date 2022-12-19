@@ -129,7 +129,7 @@ def BrandDetect():
 			cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
 			cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
 			lcd.lcd_display_string(label,2)
-	return frame
+	return blurred_img
 	#out.write(frame)
 	#out2.write(blurred_img)
 ################ Function Define END ###################
