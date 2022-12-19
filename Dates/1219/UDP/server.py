@@ -35,7 +35,6 @@ print('server start')
 while True:
     if end == 1:
         break
-print("wait")
-cs, addr = server_socket.accept()
-_thread.start_new_thread(threaded, (cs, addr)
-	
+	print("wait")
+	cs, addr = server_socket.accept()
+	_thread.start_new_thread(threaded, (cs, addr)
