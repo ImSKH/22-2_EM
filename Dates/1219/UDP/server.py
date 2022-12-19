@@ -8,4 +8,9 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 server_socket.bind((host, port))
 
-data, address = server_socket.recvfrom(200)
+while True:
+	data, address = server_socket.recvfrom(200)
+	print("Server received : ", data.decode())
+	print("Send Client IP : ", address[0])
+	print("Send Client Port : ", address[1])
+	print("Server return data to ", address[0])
