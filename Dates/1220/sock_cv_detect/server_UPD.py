@@ -10,7 +10,7 @@ sock.bind((ip, port))
 
 size = 46080
 
-s=[b'\xff'*size for x in range(20)]
+s=[b"\xff"*size for x in range(20)]
 
 
 while True :
@@ -22,7 +22,7 @@ while True :
 		for i in range(20):
 			picture += s[i]
 
-		frame = numpy.fromstring(s, dtype = numpy.uint8)
+		frame = numpy.fromstring(picture, dtype = numpy.uint8)
 		frame = frame.reshape(480,640,3)
 		cv2.imshow("frame", frame)
 

@@ -4,7 +4,7 @@ import struct
 import pickle
 import cv2
 
-ip = '192.168.45.179'
+ip = '192.168.222.23'
 port = 8080
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

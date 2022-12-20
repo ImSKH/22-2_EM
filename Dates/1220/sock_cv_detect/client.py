@@ -17,7 +17,7 @@ from tflite_runtime.interpreter import Interpreter
 
 ################ Initializing ###################
 #Socket initializing
-ip = '192.168.45.179'
+ip = '192.168.222.23'
 port = 8080
 
 #LCD initializing
