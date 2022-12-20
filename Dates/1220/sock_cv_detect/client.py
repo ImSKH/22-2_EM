@@ -67,9 +67,10 @@ boxes_idx, classes_idx, scores_idx = 1,3,0
 video = cv2.VideoCapture(cv2.CAP_V4L2+0)
 video.set(3,resW)
 video.set(4,resH)
+video.set(cv2.CAP_PROP_FPS, 10)
 filename = __file__.split('.')[0]
 out = cv2.VideoWriter(filename+'.avi',cv2.VideoWriter_fourcc(*'DIVX'),7,(resW,resH))
-out2 = cv2.VideoWriter(filename+'2.avi',cv2.VideoWriter_fourcc(*'DIVX'),7,(resW,resH))
+out_blurr= cv2.VideoWriter(filename+'_blurr.avi',cv2.VideoWriter_fourcc(*'DIVX'),7,(resW,resH))
 ################ Initializing END ###################
 
 ################ Function Define ##################
@@ -129,10 +130,10 @@ def BrandDetect():
 			cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10),(xmin+labelSize[0], label_ymin+baseLine-10), (255,255,255), cv2.FILLED)
 			cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0) , 2)
 			lcd.lcd_display_string(label,2)
+	
+	out.write(frame)
+	out_blurr.write(blurred_img)
 	return blurred_img
-	#out.write(frame)
-	#out2.write(blurred_img)
-
 def SockCommunication(frame) :
 	retval, resframe = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 30])
 	resframe = pickle.dumps(resframe)
