@@ -134,7 +134,7 @@ def BrandDetect():
 	#out2.write(blurred_img)
 
 def SockCommunication(frame) :
-	retval, resframe = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 0])
+	retval, resframe = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 30])
 	resframe = pickle.dumps(resframe)
 	print("Transmitted frame size : {} bytes".format(len(resframe)))
 	return resframe
