@@ -16,7 +16,7 @@ s=[b'\xff'*size for x in range(20)]
 while True :
 	picture = b""
 	data, addr = sock.recvfrom(size+1)
-	s[data[0]] == 19
+	s[data[0]] = data[1:size+1]
 
 	if data[0] == 19:
 		for i in range(20):
