@@ -81,7 +81,7 @@ def WaveSensor():
 	time.sleep(0.00001) ##pulse 1us
 	GPIO.output(TRIG,False)
 	while GPIO.input(ECHO) == 0:
-		start = time.time()gggg
+		start = time.time()
 	while GPIO.input(ECHO) == 1:
 		stop = time.time()
 	ctime = stop-start
