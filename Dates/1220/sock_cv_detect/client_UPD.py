@@ -14,4 +14,4 @@ while True :
 	s = d.tobytes()
 
 	for i in range(20):
-		sock.sendto(s[i*size:(i+1)*size],(ip,port))
+		sock.sendto(bytes([i])+s[i*size:(i+1)*size],(ip,port))

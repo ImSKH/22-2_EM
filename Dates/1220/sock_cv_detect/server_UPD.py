@@ -10,17 +10,21 @@ sock.bind((ip, port))
 
 size = 46080
 
-s = b""
+s=[b'\xff'*size for x in range(20)]
+
 
 while True :
-	data, addr = sock.recvfrom(size)
-	s += data
+	picture = b""
+	data, addr = sock.recvfrom(size+1)
+	s[data[0]] == 19
 
-	if len(s) == (size*20):
+	if data[0] == 19:
+		for i in range(20):
+			picture += s[i]
+
 		frame = numpy.fromstring(s, dtype = numpy.uint8)
 		frame = frame.reshape(480,640,3)
 		cv2.imshow("frame", frame)
-		s = b""
 
 		if cv2.waitKey(1)&0xFF == ord('q'):
 			cv2.destroyAllWindows()
