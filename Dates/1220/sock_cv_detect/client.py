@@ -67,7 +67,7 @@ boxes_idx, classes_idx, scores_idx = 1,3,0
 video = cv2.VideoCapture(cv2.CAP_V4L2+0)
 video.set(3,resW)
 video.set(4,resH)
-video.set(cv2.CAP_PROP_FPS, 10)
+#video.set(cv2.CAP_PROP_FPS, 10)
 filename = __file__.split('.')[0]
 out = cv2.VideoWriter(filename+'.avi',cv2.VideoWriter_fourcc(*'DIVX'),7,(resW,resH))
 out_blurr= cv2.VideoWriter(filename+'_blurr.avi',cv2.VideoWriter_fourcc(*'DIVX'),7,(resW,resH))
@@ -81,7 +81,7 @@ def WaveSensor():
 	time.sleep(0.00001) ##pulse 1us
 	GPIO.output(TRIG,False)
 	while GPIO.input(ECHO) == 0:
-		start = time.time()
+		start = time.time()gggg
 	while GPIO.input(ECHO) == 1:
 		stop = time.time()
 	ctime = stop-start
