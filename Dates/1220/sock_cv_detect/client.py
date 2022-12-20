@@ -42,7 +42,7 @@ MODEL_NAME = '../../model/'
 GRAPH_NAME = 'detect.tflite'
 LABEL_NAME = 'labelmap.txt'
 min_conf_threshold = float(0.5)
-resW, resH = 320, 240
+resW, resH = 960, 720
 PATH_TO_CKPT = os.path.join(os.getcwd(), MODEL_NAME, GRAPH_NAME)
 PATH_TO_LABELS = os.path.join(os.getcwd(), MODEL_NAME, LABEL_NAME)
 
@@ -81,7 +81,7 @@ def WaveSensor():
 	time.sleep(0.00001) ##pulse 1us
 	GPIO.output(TRIG,False)
 	while GPIO.input(ECHO) == 0:
-		start = time.time()gggg
+		start = time.time()
 	while GPIO.input(ECHO) == 1:
 		stop = time.time()
 	ctime = stop-start
